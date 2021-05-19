@@ -51,7 +51,7 @@ const ProjectCard = ({ title, websiteScreens, github, demo, setPreviewData }) =>
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <Card.Img variant='top' src={websiteScreens[0].default} />
+            <Card.Img className={classes.imagePreview} variant='top' src={websiteScreens[0].default} />
             <Card.ImgOverlay className={classes.overlay} style={cardStyle}>
                 {
                     <div className={classes.cardBody}>

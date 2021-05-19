@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss'
 export const useStyles = createUseStyles({
     cardContainer: {
         marginBottom: '0',
+        height: '100%'
     },
     overlay: {
         transition: 'background-color 0.5s ease-out 0.4s',
@@ -137,9 +138,9 @@ export const useStyles = createUseStyles({
     link: {
         color: '#FFFFFF',
         cursor: 'pointer',
-        display:'flex',
-        '& span':{
-            marginLeft:'0.5rem'
+        display: 'flex',
+        '& span': {
+            marginLeft: '0.5rem'
         },
         '&:hover': {
             textDecoration: 'underline'
@@ -156,5 +157,8 @@ export const useStyles = createUseStyles({
         color: '#FFFFFF',
         cursor: 'pointer',
     },
-
+    imagePreview: {
+        objectFit: 'cover',
+        height: '100%',
+    }
 })
