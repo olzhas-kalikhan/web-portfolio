@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Form, Button, Alert } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
@@ -28,15 +28,14 @@ const validationSchema = yup.object().shape({
 });
 const MessageForm = () => {
     const classes = useStyles()
-    const sendEmail = (formValues) => {
-        axios.post('https://email-js-api.herokuapp.com/sendemail', formValues)
-            .then(response => console.log(response))
-            .catch(err => console.error(err))
-    }
-    const handleFromSubmit = (values, actions) => {
+    const [isMessageSent, setIsMessageSent] = useState(false)
+    const [error, setError] = useState(false)
+    const handleFromSubmit = (values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
-            sendEmail(values)
-            actions.setSubmitting(false)
+            axios.post('https://email-js-api.herokuapp.com/sendemail', values)
+                .then(() => { setIsMessageSent(true); resetForm({}) })
+                .catch(err => { if (err) setError(true) })
+            setSubmitting(false)
         }, 1000)
     }
     return (
@@ -48,7 +47,6 @@ const MessageForm = () => {
             {({
                 handleSubmit,
                 handleChange,
-                handleBlur,
                 values,
                 touched,
                 isSubmitting,
@@ -106,6 +104,12 @@ const MessageForm = () => {
                     >
                         Send
                     </Button>
+                    <Alert show={isMessageSent} variant='success' onClose={() => setIsMessageSent(false)} dismissible transition={false}>
+                        Message Sent
+                    </Alert>
+                    <Alert show={error} variant='danger' onClose={() => setError(null)} dismissible transition={false} >
+                        Oops... something is wrong try using links below, or message me later
+                    </Alert>
                 </Form>
 
             )}
